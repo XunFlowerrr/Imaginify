@@ -25,12 +25,14 @@ const AddTransformationPage = async ({
         subtitle={transformationType.subTitle}
       />
 
-      <TransformationForm
-        action="Add"
-        userId={user._id}
-        type={transformationType.type as TransformationTypeKey}
-        creditBalance={user.creditBalance}
-      />
+      <section className="mt-10">
+        <TransformationForm
+          action="Add"
+          userId={user._id}
+          type={transformationType.type as TransformationTypeKey}
+          creditBalance={user.creditBalance}
+        />
+      </section>
     </>
   );
 };
