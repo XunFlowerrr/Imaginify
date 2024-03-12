@@ -2,13 +2,13 @@ import { Schema, model, models, Document } from "mongoose";
 
 export interface IImage extends Document {
   title: string;
-  transformationTypes: string;
+  transformationType: string;
   publicId: string;
-  secureUrl: URL;
+  secureURL: string;
   width?: number;
   height?: number;
   config?: object;
-  transformationUrl?: URL;
+  transformationUrl?: string;
   aspectRatio?: string;
   color?: string;
   prompt?: string;
@@ -26,7 +26,7 @@ const ImageSchema = new Schema({
     type: String,
     required: true,
   },
-  transformationTypes: {
+  transformationType: {
     type: String,
     required: true,
   },
@@ -34,8 +34,8 @@ const ImageSchema = new Schema({
     type: String,
     required: true,
   },
-  secureUrl: {
-    type: URL,
+  secureURL: {
+    type: String,
     required: true,
   },
   width: {
@@ -48,7 +48,7 @@ const ImageSchema = new Schema({
     type: Object,
   },
   transformationUrl: {
-    type: URL,
+    type: String,
   },
   aspectRatio: {
     type: String,
