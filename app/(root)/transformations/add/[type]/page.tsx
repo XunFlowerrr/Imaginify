@@ -9,8 +9,8 @@ import { redirect } from "next/navigation";
 const AddTransformationPage = async ({
   params: { type },
 }: SearchParamProps) => {
-  const transformationType = transformationTypes[type];
   const { userId } = auth();
+  const transformationType = transformationTypes[type];
 
   if (!userId) {
     redirect("/sign-in");
