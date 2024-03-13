@@ -1,8 +1,8 @@
 "use client";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Select,
@@ -75,9 +75,7 @@ const TransformationForm = ({
           prompt: data?.prompt,
           publicId: data?.publicId,
         }
-      : {
-          defaultValues,
-        };
+      : defaultValues;
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -132,7 +130,10 @@ const TransformationForm = ({
       if (action === "Update") {
         try {
           const updatedImage = await updateImage({
-            image: { ...imageData, _id: data._id },
+            image: {
+              ...imageData,
+              _id: data._id,
+            },
             userId,
             path: `/transformations/${data._id}`,
           });
@@ -154,6 +155,7 @@ const TransformationForm = ({
     onChangeField: (value: string) => void
   ) => {
     const imageSize = aspectRatioOptions[value as AspectRatioKey];
+
     setImage((prevState: any) => ({
       ...prevState,
       aspectRatio: imageSize.aspectRatio,
@@ -175,20 +177,23 @@ const TransformationForm = ({
     debounce(() => {
       setNewTransformation((prevState: any) => ({
         ...prevState,
-        [type]: { ...prevState?.[type] },
-        [fieldName === "prompt" ? "prompt" : "to"]: value,
+        [type]: {
+          ...prevState?.[type],
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
+        },
       }));
+    }, 1000)();
 
-      return onChangeField(value);
-    }, 1000);
+    return onChangeField(value);
   };
 
-  // TODO: Return to update credits
   const onTransformHandler = async () => {
     setIsTransforming(true);
+
     setTransformationConfig(
       deepMergeObjects(newTransformation, transformationConfig)
     );
+
     setNewTransformation(null);
 
     startTransition(async () => {
@@ -211,9 +216,7 @@ const TransformationForm = ({
           name="title"
           formLabel="Image Title"
           className="w-full"
-          render={({ field }) => {
-            return <Input {...field} className="input-field" />;
-          }}
+          render={({ field }) => <Input {...field} className="input-field" />}
         />
 
         {type === "fill" && (
@@ -224,7 +227,7 @@ const TransformationForm = ({
             className="w-full"
             render={({ field }) => (
               <Select
-                onValueChange={(value: string) =>
+                onValueChange={(value) =>
                   onSelectFieldHandler(value, field.onChange)
                 }
                 value={field.value}
@@ -245,12 +248,12 @@ const TransformationForm = ({
         )}
 
         {(type === "remove" || type === "recolor") && (
-          <div className="prompt-filed">
+          <div className="prompt-field">
             <CustomField
               control={form.control}
               name="prompt"
               formLabel={
-                type === "remove" ? "Object to remove" : "Object ot recolor"
+                type === "remove" ? "Object to remove" : "Object to recolor"
               }
               className="w-full"
               render={({ field }) => (
@@ -273,7 +276,7 @@ const TransformationForm = ({
               <CustomField
                 control={form.control}
                 name="color"
-                formLabel="Replacement color"
+                formLabel="Replacement Color"
                 className="w-full"
                 render={({ field }) => (
                   <Input
@@ -319,19 +322,19 @@ const TransformationForm = ({
             transformationConfig={transformationConfig}
           />
         </div>
+
         <div className="flex flex-col gap-4">
           <Button
-            className="submit-button capitalize"
             type="button"
+            className="submit-button capitalize"
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
             {isTransforming ? "Transforming..." : "Apply Transformation"}
           </Button>
-
           <Button
-            className="submit-button capitalize"
             type="submit"
+            className="submit-button capitalize"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Submitting..." : "Save Image"}
