@@ -59,10 +59,12 @@ const MobileNav = () => {
                         key={link.route}
                         className={`${
                           isActive && "gradiant-text"
-                        } p-18 flex whitespace-nowrap text-dark-700`}>
+                        } p-18 flex whitespace-nowrap text-dark-700`}
+                      >
                         <Link
                           className="sidebar-link cursor-pointer"
-                          href={link.route}>
+                          href={link.route}
+                        >
                           <Image
                             src={link.icon}
                             alt="logo"
@@ -77,13 +79,6 @@ const MobileNav = () => {
                   })}
                 </ul>
               </>
-              <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </SheetDescription>
-              </SheetHeader>
             </SheetContent>
           </Sheet>
         </SignedIn>
