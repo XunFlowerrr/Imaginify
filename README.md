@@ -1,4 +1,4 @@
-![Imaginify](public\logo.png)
+![Imaginify](public/logo.png)
 
 Imaginify is a cutting-edge AI-manipulated image platform designed to empower users with advanced image editing capabilities. Leveraging the latest technologies, Imaginify offers a seamless user experience for transforming images with AI algorithms.
 
